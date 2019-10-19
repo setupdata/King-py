@@ -1,4 +1,4 @@
-import pyking.tushare.docs.tutext as tut
+import pyking.docs.tutext as tut
 
 
 def creat_py_doc():

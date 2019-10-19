@@ -1,4 +1,5 @@
-from pyking.tushare import creat, getinfo
+from pyking.tushare import creatT, getinfo
+from pyking.mat import creatM
 
 if __name__ == "__main__":
-    print(getinfo.Search('symbol', '603696'))
+    creatM.creat_mat_doc()
