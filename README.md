@@ -5,8 +5,15 @@ King代码包，富含很多乱七八糟的东西。
 ## 安装方式
 
 环境Python3
+
+安装
 ```
-pip install pyking
+pip3 install pyking
+```
+
+更新
+```
+pip3 install --upgrade pyking
 ```
 
 ## 使用方法
