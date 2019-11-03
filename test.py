@@ -1,5 +1,4 @@
-from pyking.tushare import creatT, getinfo
-from pyking.mat import creatM
+from pyking.tushare import creat, getinfo
 
 if __name__ == "__main__":
-    creatM.creat_mat_doc()
+    pass

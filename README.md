@@ -14,9 +14,7 @@ pip install pyking
 ### 导入库文件
 ```Python
 #tushare股票查询与py文件创建接口
-from pyking.tushare import creatT, getinfo
-#创建绘图库markdown文档
-from pyking.mat import creatM
+from pyking.tushare import creat, getinfo
 ```
 
 ### 调用函数
@@ -48,26 +46,10 @@ getinfo.Refresh()
 功能: 刷新数据库中的股票数据
 ***
 ```python
-creatT.creat_api_doc()
+creat.creat()
 ```
 
 <font size=4>功能与参数</font>
 
-功能: 在当前目录下创建api文档文件
+功能: 在当前目录下创建文档文件
 ***
-```python
-creatT.creat_py_doc()
-```
-
-<font size=4>功能与参数</font>
-
-功能: 在当前目录下创建tushare常用的python文件
-
-***
-```python
-creatM.creat_mat_doc()
-```
-
-<font size=4>功能与参数</font>
-
-功能: 在当前目录下创建mat的用法markdown文件
