@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='pyking',
-    version='1.0.0',
+    version='1.1.1',
     description='富含乱七八糟代码的代码包',
     author='setupdata',
     author_email='ran1144639044@gmail.com',

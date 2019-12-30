@@ -149,4 +149,307 @@ plt.show()
 
 ![avator](https://imimg.mydw.xyz/2019/10/18/df65cedbbc69a26f.png)
 
+## 关于图形的属性和格式
+
+解决图形中文乱码的问题
+
+```python
+plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
+```
+
+## 设置x轴和y轴的标签
+
+```python
+plt.xlabel('name')
+plt.ylabel('name')
+```
+
+## 给图形添加数据标签
+
+```python
+plt.text(x, y, value, ha = "center", va = "bottom", fontsize = 8) 
+# x,y表示在坐标(x,y)处添加文字
+# ha='center', va= 'bottom'代表horizontalalignment（水平对齐）、verticalalignment（垂直对齐）的方式，fontsize则是文字大小
+```
+
+## 显示图例
+
+```python
+plt.legend(["","",""])
+# 传入n个参数，对应不同的n个图线
+```
+
+## 设置数轴的值或改变其偏移量
+
+```python
+plt.xticks(rotation=90) # 设置x轴的偏移量
+plt.yticks(rotation=90) # 设置y轴的偏移量
+```
+
+rotation表示从水平方向开始，顺时针的旋转量
+
+这一类函数还可以用于替换数轴的各个值，官方的示例如下：
+
+```python
+xticks( arange(5), ('Tom', 'Dick', 'Harry', 'Sally','Sue'))
+# 用['Tom', 'Dick', 'Harry', 'Sally','Sue']替换x数轴上的[0,1,2,3,4]
+```
+
+## 设置画板大小
+
+```python
+plt.figure(num, figsize= (x,y))
+# num表示画板数， figsize表示画板大小为x * y, x为水平长度。
+```
+"""
+
+
+text2 = """
+import pandas as pd
+import numpy as np
+import tushare as ts
+import matplotlib.pyplot as plt
+
+if __name__ == "__main__":
+    plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
+    plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
+
+    # 读文件
+    df = pd.read_csv("./如意集团2018年6月公司股价变动日收盘价.csv")
+    # 设置画板大小
+    plt.figure(1, figsize=(9, 6))
+
+    # 获得数据
+    date2017 = df['date'].astype(np.str)
+    high = df['high']
+    close = df['close']
+    start = df['open']
+
+    # 设置坐标标签
+    plt.xlabel("时间日期")
+    plt.ylabel("价格指数")
+
+    # 图1
+    plt.plot(date2017, start)
+
+    # 图2
+    plt.plot(date2017, close, 'r--')
+
+    # 图3
+    plt.plot(date2017, high, 'g--')
+
+    # 图例
+    plt.legend(["开盘价", "收盘价", "最高价"])
+
+    # 翻转x轴
+    plt.xticks(date2017, date2017, rotation=90)
+
+    plt.savefig("b.png")
+    plt.show()
+
+"""
+
+# mt绘图1
+text3 = """
+import tushare as ts
+
+import matplotlib as mp
+
+import matplotlib.pyplot as plt
+
+from pandas.plotting import register_matplotlib_converters
+
+mp.rcParams['font.sans-serif'] = ['SimHei']
+
+mp.rcParams['axes.unicode_minus'] = False
+# 抓取数据
+
+ds = ts.get_k_data('000031', start='2019-01-01',
+                   end='2019-05-31​', ktype='M', autype='qfq')
+
+ds = ds[['date', 'close']]
+
+ds.to_excel('D:/bigdata/大悦城自2019年1月至2019年5月的前复权月末收盘价.xlsx')
+
+print(ds)
+
+
+# 为了防止出现中文乱码，在这里进行一下设置
+
+font = mp.font_manager.FontProperties(fname='C:/Windows/Fonts/simsun.ttc')
+
+
+# 生成图片
+
+x_date = ds['date']
+
+y_col1 = ds['close']
+
+x2 = range(len(x_date))
+
+width = 0.40
+
+plt.figure(figsize=(10, 8))
+
+plt.bar(x=x2, height=y_col1, width=width,color="r", label="closing data")
+
+# 给图表加上图例
+
+plt.legend()
+
+plt.xticks([index for index in x2], x_date, rotation=40)
+
+plt.xlabel("日期")
+
+plt.ylabel("指数")
+
+plt.style.use('ggplot')
+
+plt.grid(True)
+
+plt.title('大悦城自2019年1月至2019年5月的前复权月末收盘价', fontsize=12)
+
+plt.savefig('D:/bigdata/大悦城自2019年1月至2019年5月的前复权月末收盘价柱状图​.png')
+
+plt.show()
+
+"""
+
+# 绘图2
+text4 = """
+import tushare as ts
+
+import matplotlib as mp
+
+import matplotlib.pyplot as plt
+
+from pandas.plotting import register_matplotlib_converters
+
+register_matplotlib_converters()
+
+
+# 抓取数据
+
+ds = ts.get_k_data('000031', start='2019-01-01',
+                   end='2019-05-31​', ktype='M', autype='qfq')
+
+ds = ds[['date', 'high', 'low']]
+
+ds.to_excel('D:/bigdata/美利云自2018年08月31日至2018年12月31日前复权周最高价最低价.xlsx')
+
+print(ds)
+
+
+# 为了防止出现中文乱码，在这里进行一下设置
+
+font = mp.font_manager.FontProperties(fname='C:/Windows/Fonts/simsun.ttc')
+
+
+x_cel = ds['date']
+
+y_col1 = ds['high']
+
+y_col2 = ds['low']
+
+plt.figure(figsize=(11, 8))
+
+plt.plot_date(x_cel, y_col1, '-', label='high price')
+
+plt.plot_date(x_cel, y_col2, '-', label='low price')
+
+plt.xlabel('日期', fontproperties=font)
+
+plt.ylabel('指数', fontproperties=font)
+
+# 给图表加上图例
+
+plt.legend()
+
+# X轴文字倾斜
+
+plt.xticks(rotation=45)
+
+plt.style.use('ggplot')
+
+plt.grid(True)
+
+plt.title('美利云自2018年08月至2018年12月前复权周最高价最低价对比图',
+          fontproperties=font, fontsize=10)
+
+plt.savefig('D:/bigdata/美利云自2018年08月至2018年12月前复权周最高价最低价折线图.png')
+
+plt.show()
+"""
+
+# 绘图5 折线图
+text5 = """
+import tushare as ts
+
+import matplotlib as mp
+
+import matplotlib.pyplot as plt
+
+from pandas.plotting import register_matplotlib_converters
+
+register_matplotlib_converters()
+
+
+
+# 抓取数据
+
+ds = ts.get_k_data('002239', start='2018-08-31', end='2018-12-31', ktype='W', autype='qfq')
+
+ds.to_csv('D:/bigdata/奥特佳集团2018年8月31日至2018年12月31日股价变动的周收盘价.csv')
+
+
+
+# 清洗数据
+
+df = ds[['date', 'low']]
+
+df.to_csv('D:/bigdata/奥特佳集团2018年8月31日至2018年12月31日股价变动的周最低价（已清洗）.csv')
+
+print(df)
+
+
+
+# 为了防止出现中文乱码，在这里进行一下设置
+
+font = mp.font_manager.FontProperties(fname='C:/Windows/Fonts/simsun.ttc')
+
+
+
+x_cel = ds['date']
+
+y_col1 = ds['high']
+
+y_col2 = ds['open']
+
+y_col3 = ds['close']
+
+plt.figure(figsize=(10, 7))
+
+plt.plot_date(x_cel, y_col1, '-', label='peak price')
+
+plt.plot_date(x_cel, y_col2, '-', label='open price')
+
+plt.plot_date(x_cel, y_col3, '-', label='closing price')
+
+plt.xlabel('日期', fontproperties=font)
+
+plt.ylabel('指数', fontproperties=font)
+
+plt.legend()
+
+plt.xticks(rotation=45)
+
+plt.style.use('ggplot')
+
+plt.grid(True)
+
+plt.title('奥特佳集团2018年8月至12月周开盘价收盘价最高价折线图', fontproperties=font, fontsize=10)
+
+plt.savefig('D:/bigdata/奥特佳集团开盘价收盘价最高价折线图.png')
+
+plt.show()
 """
